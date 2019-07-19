@@ -1,7 +1,7 @@
 /*
  * matrix_key.c
  *
- *  Created on: 2019å¹´5æœˆ18æ—¥
+ *  Created on: 2019Äê5ÔÂ18ÈÕ
  *      Author: 10786
  */
 #include "matrix_key.h"
@@ -63,19 +63,19 @@ unsigned char Scan_Button(void)
 {
 	unsigned char i = 0, x = 0, y = 0;
 	unsigned char str = '\0';
-	i = V1 & V2 & V3 & V4; //å¦‚æœåˆ—è¯»å–åˆ°æœ‰ä½ç”µå¹³è¯´æ˜æœ‰æŒ‰é”®æŒ‰ä¸‹
+	i = V1 & V2 & V3 & V4; //Èç¹ûÁĞ¶ÁÈ¡µ½ÓĞµÍµçÆ½ËµÃ÷ÓĞ°´¼ü°´ÏÂ
 	if (i == 0)
 	{
-		DELAY_US(50);//å»¶æ—¶æ¶ˆæŠ–
+		DELAY_US(50);//ÑÓÊ±Ïû¶¶
 		i = V1 & V2 & V3 & V4;
-		if (i == 0)    //å¦‚æœåˆ—è¯»å–åˆ°ä»ç„¶æœ‰ä½ç”µå¹³è¯´æ˜æœ‰æŒ‰é”®æŒ‰ä¸‹
+		if (i == 0)    //Èç¹ûÁĞ¶ÁÈ¡µ½ÈÔÈ»ÓĞµÍµçÆ½ËµÃ÷ÓĞ°´¼ü°´ÏÂ
 		{
 			if (!V1) x = 0x10;
 			if (!V2) x = 0x20;
 			if (!V3) x = 0x30;
 			if (!V4) x = 0x40;
 			L_I_V_O();
-			DELAY_US(50); //è¡Œä¸åˆ—è¾“å…¥è¾“å‡ºåè½¬
+			DELAY_US(50); //ĞĞÓëÁĞÊäÈëÊä³ö·´×ª
 			if (!L2) y = 0x02;
 			if (!L3) y = 0x03;
 			if (!L4) y = 0x04;
@@ -160,6 +160,6 @@ void Configio_Button(void)
 //  GpioCtrlRegs.GPBDIR.bit.GPIO57 = 0;
 	GpioCtrlRegs.GPAPUD.all = 0;
 	EDIS;
-	L_O_V_I();  //è¡Œè®¾ç½®ä¸ºè¾“å‡ºï¼ˆè¾“å‡ºä½ç”µå¹³ï¼‰åˆ—è®¾ç½®ä¸ºè¾“å…¥
+	L_O_V_I();  //ĞĞÉèÖÃÎªÊä³ö£¨Êä³öµÍµçÆ½£©ÁĞÉèÖÃÎªÊäÈë
 }
 

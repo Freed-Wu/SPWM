@@ -1,16 +1,16 @@
 #include "lcd.h"
 
-void send_command(unsigned char command_data) //å‘é€å‘½ä»¤
+void send_command(unsigned char command_data) //·¢ËÍÃüÁî
 {
 	unsigned char i;
 	unsigned char i_data;
 	unsigned int mbit;
-	i_data = 0xF8; //ä¸²è¡Œæ–¹å¼,æ•°æ®ä»MCUåˆ°LCDï¼Œå€’æ•°ç¬¬äºŒä½Lä»£è¡¨æ•°æ®æ§åˆ¶æŒ‡ä»¤ï¼ŒHä»£è¡¨æ˜¾ç¤ºæ•°æ®
+	i_data = 0xF8; //´®ĞĞ·½Ê½,Êı¾İ´ÓMCUµ½LCD£¬µ¹ÊıµÚ¶şÎ»L´ú±íÊı¾İ¿ØÖÆÖ¸Áî£¬H´ú±íÏÔÊ¾Êı¾İ
 	mbit = (i_data & 0x80) >> 7;
 	PTDD_PTDD6 = 1; //P1_0=1; //
 	//DELAY_US(100);
 	GpioDataRegs.GPBCLEAR.bit.GPIO56 = 1;//PTDD_PTDD2=0;//P1_2=0;GpioDataRegs.GPBCLEAR.bit.GPIO56 = 1
-	DELAY_US(1);//å»¶è¿Ÿ1000us
+	DELAY_US(1);//ÑÓ³Ù1000us
 	//PTADD_PTADD1=1;
 	for (i = 0; i < 8; i++)
 	{
@@ -25,16 +25,16 @@ void send_command(unsigned char command_data) //å‘é€å‘½ä»¤
 		}
 		//aa= (bool)((i_data&0x80)>>7);
 		GpioDataRegs.GPBCLEAR.bit.GPIO56 = 1;// PTDD_PTDD2=0; //P1_2=0;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		PTDD_PTDD2 = 1; //P1_2=1;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		i_data = i_data << 1;
 		mbit = (i_data & 0x80) >> 7;
 	}
-	i_data = command_data;  //å‘é€ç”¨æˆ·æŒ‡å®šæŒ‡ä»¤
+	i_data = command_data;  //·¢ËÍÓÃ»§Ö¸¶¨Ö¸Áî
 	i_data &= 0xf0;
 	mbit = (i_data & 0x80) >> 7;
-	for (i = 0; i < 8; i++) //å‘é€é«˜ä½
+	for (i = 0; i < 8; i++) //·¢ËÍ¸ßÎ»
 	{
 		if (mbit == 1)
 		{
@@ -46,16 +46,16 @@ void send_command(unsigned char command_data) //å‘é€å‘½ä»¤
 			GpioDataRegs.GPBCLEAR.bit.GPIO54 = 1;
 		} //aa=  (bool)(i_data&0x80);
 		GpioDataRegs.GPBCLEAR.bit.GPIO56 = 1;// PTDD_PTDD2=0;//P1_2=0;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		PTDD_PTDD2 = 1; //P1_2=1;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		i_data = i_data << 1;
 		mbit = (i_data & 0x80) >> 7;
 	}
 	i_data = command_data;
 	i_data <<= 4;
 	mbit = (i_data & 0x80) >> 7;
-	for (i = 0; i < 8; i++) //å‘é€ä½ä½
+	for (i = 0; i < 8; i++) //·¢ËÍµÍÎ»
 	{
 		if (mbit == 1)
 		{
@@ -67,16 +67,16 @@ void send_command(unsigned char command_data) //å‘é€å‘½ä»¤
 			GpioDataRegs.GPBCLEAR.bit.GPIO54 = 1;
 		}
 		GpioDataRegs.GPBCLEAR.bit.GPIO56 = 1;//PTDD_PTDD2=0;//P1_2=0;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		PTDD_PTDD2 = 1;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		i_data = i_data << 1;
 		mbit = (i_data & 0x80) >> 7;
 	}
 	GpioDataRegs.GPBCLEAR.bit.GPIO57 = 1;//PTDD_PTDD6=0;//P1_0=0;
 	DELAY_US(1);//delay_1ms(10);
 }
-//-----------------å‘é€æ•°æ®å­ç¨‹åº-----------------------
+//-----------------·¢ËÍÊı¾İ×Ó³ÌĞò-----------------------
 void send_data(unsigned char command_data)
 {
 	unsigned char i;
@@ -98,9 +98,9 @@ void send_data(unsigned char command_data)
 			GpioDataRegs.GPBCLEAR.bit.GPIO54 = 1;
 		}
 		GpioDataRegs.GPBCLEAR.bit.GPIO56 = 1;//PTDD_PTDD2=0;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		PTDD_PTDD2 = 1;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		i_data = i_data << 1;
 		mbit = (i_data & 0x80) >> 7;
 	}
@@ -119,9 +119,9 @@ void send_data(unsigned char command_data)
 			GpioDataRegs.GPBCLEAR.bit.GPIO54 = 1;
 		}
 		GpioDataRegs.GPBCLEAR.bit.GPIO56 = 1;//PTDD_PTDD2=0;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		PTDD_PTDD2 = 1;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		i_data = i_data << 1;
 		mbit = (i_data & 0x80) >> 7;
 	}
@@ -140,16 +140,16 @@ void send_data(unsigned char command_data)
 			GpioDataRegs.GPBCLEAR.bit.GPIO54 = 1;
 		}
 		GpioDataRegs.GPBCLEAR.bit.GPIO56 = 1;//PTDD_PTDD2=0;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		PTDD_PTDD2 = 1;
-		DELAY_US(1);//å»¶è¿Ÿ1000us
+		DELAY_US(1);//ÑÓ³Ù1000us
 		i_data = i_data << 1;
 		mbit = (i_data & 0x80) >> 7;
 	}
 	GpioDataRegs.GPBCLEAR.bit.GPIO57 = 1;// PTDD_PTDD6=0;
-	DELAY_US(1);//å»¶è¿Ÿ1000us
+	DELAY_US(1);//ÑÓ³Ù1000us
 }
-//-----------------------æ¶²æ™¶åˆå§‹åŒ–------------------------
+//-----------------------Òº¾§³õÊ¼»¯------------------------
 void lcd_init()
 {
 	asm(" EALLOW");
@@ -161,23 +161,23 @@ void lcd_init()
 	GpioCtrlRegs.GPBDIR.bit.GPIO57 = 1;      // GPIO32-GPIO63 are output
 	asm(" EDIS");
 	DELAY_US(100);
-	send_command(0x30); //åŠŸèƒ½è®¾ç½®:ä¸€æ¬¡é€8ä½æ•°æ®,åŸºæœ¬æŒ‡ä»¤é›†
+	send_command(0x30); //¹¦ÄÜÉèÖÃ:Ò»´ÎËÍ8Î»Êı¾İ,»ù±¾Ö¸Áî¼¯
 	DELAY_US(5000);
-	send_command(0x02); //åœ°å€å½’ä½
+	send_command(0x02); //µØÖ·¹éÎ»
 	DELAY_US(5000);
-	send_command(0x06);//ç‚¹è®¾å®š:æ˜¾ç¤ºå­—ç¬¦/å…‰æ ‡ä»å·¦åˆ°å³ç§»ä½,DDRAMåœ°å€åŠ 1
+	send_command(0x06);//µãÉè¶¨:ÏÔÊ¾×Ö·û/¹â±ê´Ó×óµ½ÓÒÒÆÎ»,DDRAMµØÖ·¼Ó1
 	DELAY_US(5000);
-	send_command(0x0c);//æ˜¾ç¤ºè®¾å®š:å¼€æ˜¾ç¤º,æ˜¾ç¤ºå…‰æ ‡,å½“å‰æ˜¾ç¤ºä½åç™½é—ªåŠ¨
+	send_command(0x0c);//ÏÔÊ¾Éè¶¨:¿ªÏÔÊ¾,ÏÔÊ¾¹â±ê,µ±Ç°ÏÔÊ¾Î»·´°×ÉÁ¶¯
 	DELAY_US(5000);
-	send_command(0x01); //æ¸…DDRAM
+	send_command(0x01); //ÇåDDRAM
 	DELAY_US(5000);
-	send_command(0x80); //æŠŠæ˜¾ç¤ºåœ°å€è®¾ä¸º0X80,å³ä¸ºç¬¬ä¸€è¡Œçš„é¦–ä½
+	send_command(0x80); //°ÑÏÔÊ¾µØÖ·ÉèÎª0X80,¼´ÎªµÚÒ»ĞĞµÄÊ×Î»
 	DELAY_US(5000);
 }
-//----------------------ä»»æ„ä½ç½®æ˜¾ç¤ºä¸€ä¸ªæ±‰å­—----------------
-void hz_disp(unsigned char line, unsigned char row, unsigned char hz1, unsigned char hz2) //lineè¡Œ1-4ï¼Œrowåˆ—0-7ï¼Œhz1æ±‰å­—çš„é«˜8ä½ï¼Œhz2ï¼Œæ±‰å­—çš„ä½8ä½
+//----------------------ÈÎÒâÎ»ÖÃÏÔÊ¾Ò»¸öºº×Ö----------------
+void hz_disp(unsigned char line, unsigned char row, unsigned char hz1, unsigned char hz2) //lineĞĞ1-4£¬rowÁĞ0-7£¬hz1ºº×ÖµÄ¸ß8Î»£¬hz2£¬ºº×ÖµÄµÍ8Î»
 {
-	//send_command(0x01); // æ¸…é™¤æ˜¾ç¤ºï¼Œå¹¶ä¸”è®¾å®šåœ°å€æŒ‡é’ˆä¸º00H
+	//send_command(0x01); // Çå³ıÏÔÊ¾£¬²¢ÇÒÉè¶¨µØÖ·Ö¸ÕëÎª00H
 	switch (line)
 	{
 		case 1:
@@ -210,10 +210,10 @@ void hz_disp(unsigned char line, unsigned char row, unsigned char hz1, unsigned 
 			}
 	}
 }
-//----------------------ä»»æ„ä½ç½®æ˜¾ç¤ºå˜é‡----------------
-void num_disp(unsigned char line, unsigned char row, unsigned char num, unsigned char numa, unsigned char numb, unsigned char numc) //lineè¡Œ1-4ï¼Œrowåˆ—0-7ï¼Œnumè¦æ˜¾ç¤ºçš„æ•°å­—
+//----------------------ÈÎÒâÎ»ÖÃÏÔÊ¾±äÁ¿----------------
+void num_disp(unsigned char line, unsigned char row, unsigned char num, unsigned char numa, unsigned char numb, unsigned char numc) //lineĞĞ1-4£¬rowÁĞ0-7£¬numÒªÏÔÊ¾µÄÊı×Ö
 {
-	//send_command(0x01); // æ¸…é™¤æ˜¾ç¤ºï¼Œå¹¶ä¸”è®¾å®šåœ°å€æŒ‡é’ˆä¸º00H
+	//send_command(0x01); // Çå³ıÏÔÊ¾£¬²¢ÇÒÉè¶¨µØÖ·Ö¸ÕëÎª00H
 	switch (line)
 	{
 		case 1:
@@ -255,10 +255,10 @@ void num_disp(unsigned char line, unsigned char row, unsigned char num, unsigned
 	}
 
 }
-//----------------------ä»»æ„ä½ç½®æ˜¾ç¤ºå˜é‡----------------
-void strDisp(unsigned char line, unsigned char row, char str[], unsigned int count) //lineè¡Œ1-4ï¼Œrowåˆ—0-7ï¼Œnumè¦æ˜¾ç¤ºçš„æ•°å­—
+//----------------------ÈÎÒâÎ»ÖÃÏÔÊ¾±äÁ¿----------------
+void strDisp(unsigned char line, unsigned char row, char str[], unsigned int count) //lineĞĞ1-4£¬rowÁĞ0-7£¬numÒªÏÔÊ¾µÄÊı×Ö
 {
-	//send_command(0x01); // æ¸…é™¤æ˜¾ç¤ºï¼Œå¹¶ä¸”è®¾å®šåœ°å€æŒ‡é’ˆä¸º00H
+	//send_command(0x01); // Çå³ıÏÔÊ¾£¬²¢ÇÒÉè¶¨µØÖ·Ö¸ÕëÎª00H
 	switch (line)
 	{
 		case 1:
@@ -296,14 +296,14 @@ void strDisp(unsigned char line, unsigned char row, char str[], unsigned int cou
 		}
 	}
 }
-//LCD12864 æ¸…å±*/
+//LCD12864 ÇåÆÁ*/
 void LCD12864_Clear()
 {
-	send_command(0x01); //æ¸…DDRAM
-	DELAY_US(5000);                //å»¶æ—¶1.6ms
+	send_command(0x01); //ÇåDDRAM
+	DELAY_US(5000);                //ÑÓÊ±1.6ms
 }
 
-/*æ¢ç®—*/
+/*»»Ëã*/
 qian_(int i)
 {
 	int k;
@@ -329,7 +329,7 @@ ge_(int i)
 	return k;
 }
 
-/*æ˜¾ç¤ºç”µå‹1å’Œæ•°å€¼*/
+/*ÏÔÊ¾µçÑ¹1ºÍÊıÖµ*/
 lcd_voltage1(i)
 {
 
@@ -341,7 +341,7 @@ lcd_voltage1(i)
 	num_disp(1, 4, bai_(i), 0x7E, shi_(i), ge_(i));
 
 }
-/*æ˜¾ç¤ºç”µå‹2å’Œæ•°å€¼*/
+/*ÏÔÊ¾µçÑ¹2ºÍÊıÖµ*/
 lcd_voltage2(i)
 {
 	hz_disp(2, 0, 0xB5, 0xE7);
@@ -352,7 +352,7 @@ lcd_voltage2(i)
 	num_disp(2, 4, bai_(i), 0x7E, shi_(i), ge_(i));
 
 }
-/*æ˜¾ç¤ºç”µå‹3å’Œæ•°å€¼*/
+/*ÏÔÊ¾µçÑ¹3ºÍÊıÖµ*/
 lcd_voltage3(i)
 {
 	hz_disp(3, 0, 0xCA, 0xE4);
