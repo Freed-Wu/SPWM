@@ -41,11 +41,11 @@ unsigned int gCMP_Save[200];
 unsigned int gCnt_Save;
 unsigned char a = 0;
 float gM;
-//input:°´¼üÊäÈë
-//disp:ÆÁÄ»ÏÔÊ¾
-//gVm:ÏÔÊ¾µÄÊı×Ö×ª»»ÎªÊäÈëµçÑ¹µÄ×î´óÖµ
-//mode:Ä£Ê½Ñ¡Ôñ£¬Æô¶¯ºóµçÑ¹ÊäÈë£¬°´AÇĞ»»µçÑ¹¡¢ÆµÂÊ
-//load:¸ºÔØÑ¡Ôñ£¬Æô¶¯ºóÎŞ¸ºÔØ£¬°´BÇĞ»»ÓĞÎŞ
+//input:æŒ‰é”®è¾“å…¥
+//disp:å±å¹•æ˜¾ç¤º
+//gVm:æ˜¾ç¤ºçš„æ•°å­—è½¬æ¢ä¸ºè¾“å…¥ç”µå‹çš„æœ€å¤§å€¼
+//mode:æ¨¡å¼é€‰æ‹©ï¼Œå¯åŠ¨åç”µå‹è¾“å…¥ï¼ŒæŒ‰Aåˆ‡æ¢ç”µå‹ã€é¢‘ç‡
+//load:è´Ÿè½½é€‰æ‹©ï¼Œå¯åŠ¨åæ— è´Ÿè½½ï¼ŒæŒ‰Båˆ‡æ¢æœ‰æ— 
 unsigned char input = '\0';
 char disp[12] = "";
 int mode = 0;
@@ -63,9 +63,9 @@ void main ( void ) {
 	PieVectTable.EPWM1_INT = &User_EPWM1_INT_ISR;
 	asm ( " EDIS" );
 	//InitXintf( );
-	gTs = 1.0 / 200e3; //200k ¿ª¹ØÆµÂÊ
-	gVm = 1 ; // gVm Êä³öÓĞĞ§Öµ 1*1.414(¸ùºÅ2)
-	gF = 5000;// gF ÆµÂÊ
+	gTs = 1.0 / 200e3; //200k å¼€å…³é¢‘ç‡
+	gVm = 1 ; // gVm è¾“å‡ºæœ‰æ•ˆå€¼ 1*1.414(æ ¹å·2)
+	gF = 5000;// gF é¢‘ç‡
 	gCnt = 0;
 	gCnt_Save = 0;
 	gM = 0;
@@ -82,29 +82,29 @@ void main ( void ) {
 	ERTM;
 	while ( 1 ) {
 		/********
-		*  ÏÔÊ¾  *
+		*  æ˜¾ç¤º  *
 		********/
 		LCD12864_Clear();
 		char show1[12] = "";
 		num2char ( show1, gVm, 2, 2 );
-		char show11[12]  = "µçÑ¹£º";
+		char show11[12]  = "ç”µå‹ï¼š";
 		strcat ( show11, show1 );
 		strcat ( show11, "V" );
 		strDisp ( 1, 1, show11, 12 );
 		char show2[12] = "";
 		num2char ( show2, gF, 5, 0 );
-		char show21[12]  = "ÆµÂÊ£º";
+		char show21[12]  = "é¢‘ç‡ï¼š";
 		strcat ( show21, show2 );
 		strcat ( show21, "Hz" );
 		strDisp ( 2, 1, show21, 14 );
-		char show3[12] = "ÊäÈë£º";
+		char show3[12] = "è¾“å…¥ï¼š";
 		strcat ( show3, disp );
 		strDisp ( 3, 1, show3, 14 );
-		char show4[12] = "Ä£Ê½£º";
+		char show4[12] = "æ¨¡å¼ï¼š";
 		if ( mode )
-			strcat ( show4, "ÆµÂÊ" );
+			strcat ( show4, "é¢‘ç‡" );
 		else
-			strcat ( show4, "µçÑ¹" );
+			strcat ( show4, "ç”µå‹" );
 		if ( load )
 			strcat ( show4, "*" );
 		else
@@ -112,20 +112,20 @@ void main ( void ) {
 		strDisp ( 4, 1, show4, 14 );
 		/*DELAY_US(1000000);*/
 		/**********
-		*  °´¼üÉ¨Ãè  *
+		*  æŒ‰é”®æ‰«æ  *
 		**********/
 		if ( load == 1 ) gVm = gVm * 2; ////
 		while ( input == '\0' || Scan_Button() != '\0' )
 			input = Scan_Button();
 		switch ( input ) {
 			case '*':
-				//È·ÈÏ
+				//ç¡®è®¤
 				if ( mode )
 					gF = atof ( disp );
 				else
 					gVm = atof ( disp );
 			case 'C':
-				//ÎŞÂÛÈ·ÈÏÇå¿Õ£¬¶¼Òª½«ÏÔÊ¾Çå¿Õ
+				//æ— è®ºç¡®è®¤æ¸…ç©ºï¼Œéƒ½è¦å°†æ˜¾ç¤ºæ¸…ç©º
 				dot = 0;
 				strcpy ( disp, "" );
 				break;
